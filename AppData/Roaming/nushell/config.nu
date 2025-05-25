@@ -18,6 +18,7 @@ let aliases = {
 };
 
 $env.config.show_banner = false;
+source ~/.zoxide.nu;
 
 def primary_deps [echo] {
   let full_command = $"cargo doc --no-deps (cargo tree --depth 1 | parse '{tree} {dep} {ver}' | skip 1 | select dep | reduce -f '' {|elt, acc| $acc + ' -p ' + $elt.dep}) --open"
