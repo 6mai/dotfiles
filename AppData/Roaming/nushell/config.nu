@@ -20,18 +20,55 @@ let aliases = {
 $env.config.show_banner = false;
 source ~/.zoxide.nu;
 
-def primary_deps [echo] {
+def primary_deps [echo?: string] {
   let full_command = $"cargo doc --no-deps (cargo tree --depth 1 | parse '{tree} {dep} {ver}' | skip 1 | select dep | reduce -f '' {|elt, acc| $acc + ' -p ' + $elt.dep}) --open"
-  if $echo == "echo" {
+  if $echo != null {
     print $full_command
   } else {
     (nu -c $full_command)
    }
 }
+def tt [...cont] {
+  $cont | each  { | it |
+    print $it
+  }
+}
 
-def rar2zip [path] {
+# 『涸れ森』と呼ばれる場所になった。私が〝人〟であり、クァール"
+
+def replace_annoying_chars_from_epubs [path: string] {
+  let name = $path | path parse | get stem;
+  let name = "temp"
+  (mkdir $name)
+
+  (7z x -o($name) $path)
+  (cd $name)
+
+  let fnr = [[find, replace]; ["\'", '〝'], ["\'", '〟']];
+  let xhtmls = (ls **/* | find .xhtml);
+
+  for file in $xhtmls {
+  mut text = (open $file.name);
+    for find in $fnr {
+      $text = $text | str replace $find.find $find.replace
+    }
+    
+    let filename = $file.name;
+    print $filename
+
+(open $file.name)
+   ($text | save -f $filename)
+  }
+  (cd ..)
+
+  (7z a -tzip ($name + "_mod.epub") ("./" + $name + "/*"))
+
+  (rm -r $name)
+}
+
+def rar2zip [path?: string] {
   let temp_name = "_" + (random uuid);
-  let file_name = $path | path parse | get stem; 
+  let file_name = ($path | default '') | path parse | get stem; 
   let dir_path = if ($path | path parse | get parent) == "" {
     "./"
   } else {
@@ -57,11 +94,11 @@ def rar2zip [path] {
   (rm -r $temp_name)
 }
 
-def avif2zip [] {
+def avif2zip [path?: string] {
   let temp_folder = "_temp_folder" ;
   (mkdir $temp_folder)
 
-  # (magick mogrify -format png -path $temp_folder *.avif)
+  (magick mogrify -format png -path $temp_folder (($path | default '') + "*.avif"))
 
   let zipping = (7z a -tzip (pwd | path basename) ("./" + $temp_folder + "/*") | complete);
   
@@ -69,7 +106,7 @@ def avif2zip [] {
       print $zipping.stderr;
       print $zipping.stdout;
   } 
-  # (rm -r $temp_folder)
+  (rm -r $temp_folder)
 }
 
 def to_from_img [to, from] {
