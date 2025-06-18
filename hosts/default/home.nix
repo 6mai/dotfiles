@@ -24,6 +24,7 @@
     imagemagick
     unzip
     emacsGcc
+    rust-analyzer
   ];
 
   home.file = {
@@ -41,7 +42,7 @@
     "./.swayidle/config".source = ../../cfgs/swayidle/config;
     ".doom.d/config.el".source = ../../cfgs/.doom.d/config.el;
     ".doom.d/packages.el".source = ../../cfgs/.doom.d/packages.el;
-    ".doom.d/init.el".source = ../../cfgs/.doom.d/init.el;
+    ".doom.d/init.el".source = ../../cfgs/.doom.d/init.el ; 
   };
 
   # Home Manager can also manage your environment variables through
@@ -88,18 +89,33 @@
 
   nixpkgs.overlays = [
     (import (builtins.fetchTarball {
-      url = "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz";
+      url = "https://github.com/nix-community/emacs-overlay/archive/8dc664291c0acdd539dd27715fac06b448431f2d.tar.gz";
+      sha256 = "1gjxvikncxghkn9karfls74n12ag02n82d4c3mg9iwn396hvhcs5";
     }))
   ];
   
   programs = {
     # emacs = {
     #   enable = true;
-    #   package = pkgs.emacs-unstable;  # replace with pkgs.emacs-gtk, or a version provided by the community overlay if desired.
-    #   extraConfig = ''
-    #     (setq standard-indent 2)
-    #   '';
+      # package = pkgs.emacs-unstable;  # replace with pkgs.emacs-gtk, or a version provided by the community overlay if desired.
+      # extraConfig = ''
+      #   # (setq standard-indent 2)
+      # '';
     # };
+
+    git = {
+      enable = true;
+    };
+
+    jujutsu = {
+      enable = true;
+      settings = {
+        user = {
+          email = "${user.email}";
+          name = "${user.userName}";
+        };
+      };
+    };
 
     zoxide = {
       enable = true;

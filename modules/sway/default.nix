@@ -2,15 +2,10 @@
 let
 		file-manager = "${pkgs.xfce.thunar}/bin/thunar";
 		web-browser = "${pkgs.brave}/bin/brave";
-	  start-sway = pkgs.writeShellScriptBin "start-sway" /* sh */
-	    ''
-	      export WLR_DRM_NO_MODIFIERS=1
-	      dbus-launch --sh-syntax --exit-with-session ${pkgs.sway}/bin/sway	    '';
 in
 {
 	home.packages = with pkgs; [
 		# wayland packages for basic effin qol
-		start-sway
 		grim
 		slurp
 		wl-clipboard
