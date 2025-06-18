@@ -1,0 +1,3 @@
+timeout 600 "swaylock"
+timeout 900 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"'
+timeout 1800 "systemctl suspend" 

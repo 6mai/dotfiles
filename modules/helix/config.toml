@@ -1,0 +1,33 @@
+
+theme = "onedark"
+
+[editor]
+line-number = "relative"
+cursorline = true
+color-modes = true
+
+[editor.file-picker ]
+hidden = false
+
+[keys.normal]
+# V = ["goto_line_start", "extend_"]
+V = ["extend_line", "select_mode"]
+# C = ["kill_to_line_end", "insert_mode"]
+C-k = "kill_to_line_end"
+A-x = "command_palette"
+h = "goto_word"
+
+[keys.normal.space]
+'.' = "file_picker_in_current_buffer_directory"
+',' = "buffer_picker"
+H = ":toggle lsp.display-inlay-hints"
+
+[keys.insert]
+j = { j = "normal_mode" }
+C-c = "normal_mode" 
+C-k = "kill_to_line_end"
+
+[keys.select]
+j = { j = "normal_mode" }
+C-c = "normal_mode" 
+h = "goto_word"
