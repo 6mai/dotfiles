@@ -96,8 +96,8 @@ in
 						"${modifier}+y" = "exec ${web-browser}";
 						"${modifier}+e" = "exec ${file-manager}";
 						"${modifier}+j" = "exec wlogout";
-						"Print" = "exec nu home/${user.userName}/dotfiles/scripts/screenshot.nu";
-						"${modifier}+o" = "exec nu home/${user.userName}/dotfiles/scripts/script_launcher.nu";
+						"Print" = "exec nu /home/${user.userName}/dotfiles/scripts/screenshot.nu";
+						"${modifier}+o" = "exec 'nu /home/${user.userName}/dotfiles/scripts/script_launcher.nu'";
 
 						"${modifier}+t" = "layout toggle tabbed split";
 						"${modifier}+s" = "layout toggle split stacking";
@@ -137,7 +137,7 @@ in
           always = false;
         }
 				{
-					command = ''nu home/${user.userName}/dotfiles/scripts/wallpaper.nu random home/${user.userName}/files/wallpapers/'';
+					command = ''/nu home/${user.userName}/dotfiles/scripts/wallpaper.nu random home/${user.userName}/files/wallpapers/'';
 				}
 			];
 		};
