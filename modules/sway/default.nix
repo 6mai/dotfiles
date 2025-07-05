@@ -12,6 +12,7 @@ in
 		swayidle
 		swaylock-effects
 		wev
+		libnotify
 	];
 
 	programs = {
@@ -60,7 +61,38 @@ in
 		
   services = {
 		swww.enable = true;
-		mako.enable = true;
+		mako = {
+	    enable = true;
+	    settings = {
+	      actions = true;
+	      anchor = "top-right";
+	      backgroundColor = "#282a36";
+	      borderColor = "#bd93f9";
+	      borderSize = 3;
+	      defaultTimeout = 3000;
+	      # font = "Mononoki Nerd Font Mono 10";
+	      height = 150;
+	      width = 300;
+	      icons = true;
+	      textColor = "#f8f8f2";
+	      layer = "overlay";
+	      sort = "-time";
+	      "urgency=low" = {
+	        border-color="#282a36";
+	        };
+	      "urgency=normal" = {
+	        border-color="#bd93f9";
+	        };
+	      "urgency=high" = {
+	        border-color="#ff5555";
+	        default-timeout=0;
+	        };
+	      "category=mpd" = {
+	        default-timeout=2000;
+	        group-by="category";
+	        };
+	      };
+		};
 
 		gammastep = {
 	    enable = true;
@@ -110,7 +142,13 @@ in
 						"Alt+Shift+4" = "set $$workroom 4; workspace $$workroom$$workspace";
 						"Alt+Shift+5" = "set $$workroom 5; workspace $$workroom$$workspace";
 
-# Navigate
+			      # Media buttons
+			      "XF86AudioRaiseVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+";
+			      "XF86AudioLowerVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-";
+			      "XF86AudioMute" = "exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+						"XF86AudioMicMute" = "exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
+ 
+						# Navigate
 						"${modifier}+grave" = "workspace $$workroom$ws0; set $$workspace $ws0";
 						"${modifier}+1" = "workspace $$workroom$ws1; set $$workspace $ws1";
 						"${modifier}+2" = "workspace $$workroom$ws2; set $$workspace $ws2";
@@ -121,6 +159,18 @@ in
 						"${modifier}+7" = "workspace $$workroom$ws7; set $$workspace $ws7";
 						"${modifier}+8" = "workspace $$workroom$ws8; set $$workspace $ws8";
 						"${modifier}+9" = "workspace $$workroom$ws9; set $$workspace $ws9";
+
+						# move container
+						"${modifier}+Shift+grave" = "move container to workspace $$workroom$ws0";
+						"${modifier}+Shift+1" = "move container to workspace $$workroom$ws1";
+						"${modifier}+Shift+2" = "move container to workspace $$workroom$ws2";
+						"${modifier}+Shift+3" = "move container to workspace $$workroom$ws3";
+						"${modifier}+Shift+4" = "move container to workspace $$workroom$ws4";
+						"${modifier}+Shift+5" = "move container to workspace $$workroom$ws5";
+						"${modifier}+Shift+6" = "move container to workspace $$workroom$ws6";
+						"${modifier}+Shift+7" = "move container to workspace $$workroom$ws7";
+						"${modifier}+Shift+8" = "move container to workspace $$workroom$ws8";
+						"${modifier}+Shift+9" = "move container to workspace $$workroom$ws9";
 					})
 				])
 			);
@@ -137,7 +187,7 @@ in
           always = false;
         }
 				{
-					command = ''/nu home/${user.userName}/dotfiles/scripts/wallpaper.nu random home/${user.userName}/files/wallpapers/'';
+					command = ''nu /home/${user.userName}/dotfiles/scripts/wallpaper.nu random /home/${user.userName}/files/wallpapers/'';
 				}
 			];
 		};

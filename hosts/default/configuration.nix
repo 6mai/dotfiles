@@ -11,6 +11,8 @@ let
     userName = "nixOS";
     hostName = "nixos";
     email = "987654321mai6@gmail.com";
+    homeDir = "/home/${user.userName}";
+    dotfiles = "${user.homeDir}/dotfiles/";
   };
 in
 {
@@ -23,9 +25,9 @@ in
 
   home-manager = {
     extraSpecialArgs = {
-    inherit inputs;
-    inherit user;
-    inherit system;
+      inherit inputs;
+      inherit user;
+      inherit system;
     };
     users = {
       ${user.userName} = import ./home.nix;
@@ -37,6 +39,7 @@ in
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.supportedFilesystems = [ "ntfs" ];
 
    networking.hostName = "${user.hostName}"; # Define your hostname.
   # Pick only one of the below networking options.
@@ -104,12 +107,15 @@ in
   # services.printing.enable = true;
 
   # Enable sound.
-  # services.pulseaudio.enable = true;
-  # OR
-   services.pipewire = {
-     enable = true;
-     pulse.enable = true;
-   };
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    pulse.enable = true;
+    alsa = {
+      enable = true;
+      support32Bit = true;
+    };
+  };
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.libinput.enable = true;
@@ -133,11 +139,15 @@ in
   ];
 
   environment.localBinInPath = true;
+  environment.sessionVariables = rec {
+    EDITOR = "hx";
+    BROWSER = "brave";
+  };
 
   # programs.firefox.enable = true;
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
-   environment.systemPackages = with pkgs; [
+  environment.systemPackages = with pkgs; [
   #   vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     brave
@@ -145,7 +155,7 @@ in
     btop
     ghostty
     xfce.thunar
-   ];
+  ];
 
   # programs.mtr.enable = true;
   programs.gnupg.agent = {
@@ -160,7 +170,7 @@ in
     enable = true;
     ports = [ 22 ];
     settings = {
-      PasswordAuthentication = true;
+      PasswordAuthentication = false;
       AllowUsers = null; # Allows all users by default. Can be [ "user1" "user2" ]
       UseDns = true;
       X11Forwarding = false;
