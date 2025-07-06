@@ -27,11 +27,17 @@
 			      "HDMI-A-1"
 			    ];
           modules-left = [
-              "sway/workspaces"
-              "sway/mode"
-              "sway/scratchpad"
-              "sway/window"
+              "hyprland/workspaces"
+              "hyprland/mode"
+              "hyprland/scratchpad"
+              "hyprland/window"
           ];
+          # modules-left = [
+          #     "sway/workspaces"
+          #     "sway/mode"
+          #     "sway/scratchpad"
+          #     "sway/window"
+          # ];
           modules-center = [
               "clock"
           ];

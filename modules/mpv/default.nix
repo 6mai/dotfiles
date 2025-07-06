@@ -63,7 +63,7 @@
       # default config
       # https://github.com/ekisu/mpv-webm/releases/download/latest/webm.conf
       keybind=W
-      output_directory=/home/${user.userName}/media/webms/
+      output_directory=${user.homeDir}/files/webms/
       run_detached=no
       output_template=%F-[%s-%e]%M
       scale_height=720

@@ -21,7 +21,11 @@ in
       ./hardware-configuration.nix
       inputs.home-manager.nixosModules.default
       ./../../modules/tor/default.nix
-    ];
+  ];
+
+  hardware = {
+    opengl.enable = true;
+  };
 
   home-manager = {
     extraSpecialArgs = {
@@ -73,12 +77,26 @@ in
 	    #   user = "${user.userName}";                                                  
 	    # };                                                                   
       initial_session = {
-        command = "${pkgs.sway}/bin/sway";
+        command = "${pkgs.hyprland}/bin/hyprland;bash";
+        # command = "${pkgs.sway}/bin/sway";
 	      user = "${user.userName}";                                                  
       };
       default_session = initial_session;
 	  };                                                                     
 	};
+
+  systemd = {
+    tmpfiles.settings = {
+      "files_home" = {
+        "${user.homeDir}/files/screencaps/" = { d.mode = "0755"; };
+        "${user.homeDir}/files/wallpapers/" = { d.mode = "0755"; };
+        "${user.homeDir}/files/webms/" = { d.mode = "0755"; };
+      };
+      "local_bin" = {
+        "${user.homeDir}/.local/bin/" = { d.mode = "0755"; };
+      };
+    };
+  };
 
   # kanshi systemd service
   systemd.user.services.kanshi = {
@@ -98,13 +116,6 @@ in
   security.polkit.enable = true; # for sway using home manager 
   services.gvfs.enable = true; # Mount, trash, and other functionalities
   services.tumbler.enable = true; # Thumbnail support for images
-
-  # Configure keymap in X11
-  # services.xserver.xkb.layout = "us";
-  # services.xserver.xkb.options = "eurosign:e,caps:escape";
-
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
 
   # Enable sound.
   security.rtkit.enable = true;
@@ -142,6 +153,7 @@ in
   environment.sessionVariables = rec {
     EDITOR = "hx";
     BROWSER = "brave";
+    NIXOS_OZONE_WL = "1";
   };
 
   # programs.firefox.enable = true;
@@ -155,6 +167,7 @@ in
     btop
     ghostty
     xfce.thunar
+    # ashell
   ];
 
   # programs.mtr.enable = true;
@@ -183,10 +196,16 @@ in
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
+  # stylix = {
+  #   enable = true;
+  #   base16Scheme = "${pkgs.base16-schemes}/share/themes/onedark.yaml";
+  # };
+
   # dark mode by default part 1/2
   programs.dconf.profiles.user.databases = [{
     settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
   }];
+
   fonts.packages = with pkgs; [
     powerline-symbols
     font-awesome
