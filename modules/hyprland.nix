@@ -1,10 +1,33 @@
 { config, pkgs, user, ... }:
+let
+  future-cyan = pkgs.fetchFromGitLab {
+    owner = "Pummelfisch";
+    repo = "future-cyan-hyprcursor";
+    hash = "sha256-Pi8+efEohVfH1iJ3oLcWLQuAOAZfR4iUOPmo4oyvrLE=";
+    rev = "44282bb5fe218b14f44af42368ef3c9ad439d646";
+  };
+  # cursor = "rose-pine-hyprcursor";
+  cursor = "future-cyan-hyprcursor";
+in
 {
   home.packages = with pkgs; [
     hyprsunset
     hyprsysteminfo
+    hyprcursor
+    rose-pine-hyprcursor
   ];
   
+  # home.file.".local/share/icons/rose-pine-hyprcursor/".source = "${pkgs.rose-pine-hyprcursor}/share/icons/rose-pine-hyprcursor/hyprcursor/";
+  home.file.".icons/future-cyan-hyprcursor".source = "${future-cyan}/Future-Cyan-Hyprcursor_Theme";
+  # home.pointerCursor = {
+  #   name = "rose-pine-hyprcursor";
+  #   package = pkgs.rose-pine-hyprcursor;
+  #   hyprcursor = {
+  #     enable = true;
+  #     size = 50;
+  #   };
+  # };
+
   wayland.windowManager.hyprland = {
     enable = true;
     xwayland.enable = true;
@@ -24,8 +47,19 @@
         "noanim,wofi"
       ];
 
+      env = [
+        "HYPRCURSOR_THEME,${cursor}"
+        "HYPRCURSOR_SIZE,35"
+      ];
+
       input = {
         repeat_delay = 300;
+      };
+
+      cursor = {
+        inactive_timeout = 30.0;
+        # hide_on_touch = false;
+        no_hardware_cursors = 1; # 1 disabled; 2 auto; this caused cursor disappearing
       };
 
       general = {
@@ -114,5 +148,9 @@
         "$mod, mouse:273, resizewindow"
       ];
     };
+
+    extraConfig = "
+      
+    ";
   };
 }

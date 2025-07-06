@@ -4,7 +4,6 @@
     margin: 0;
     padding: 0;
     border: none;
-    border-radius: 0;
     box-shadow: none;
     text-shadow: none;
 }
@@ -13,6 +12,14 @@ window#waybar {
     background-color: rgba(43, 44, 52, 0.8);
     color: #ffffff;
     transition: background-color 0.5s;
+    border-radius: 8;
+}
+.modules-left,
+.modules-right,
+.modules-center {
+    padding: 0px 4px;
+    background-color: #3b3f51;
+    border-radius: 8;
 }
 
 window#waybar.hidden {
@@ -21,20 +28,20 @@ window#waybar.hidden {
 
 #window {
     font-family: 'Sarasa Gothic SC', sans-serif;
+    margin: 0px 5px;
 }
 
 #clock {
-    min-width: 140px;
     background: #3b3f51;
     color: #ffffff;
     padding: 0px 10px;
-    border-radius: 4px;
+    border-radius: 6px;
 }
 
 #custom-power {
     font-weight: bold;
     color: #ffffff;
-    background: #536067;
+    background: #3b3f51;
     padding: 5px 10px;
     border-radius: 4px;
 }
@@ -81,7 +88,8 @@ window#waybar.hidden {
 }
 
 #tray {
-    background-color: #b5b4e2;
+    border-radius: 6px;
+    background-color: #817fcc;
     color: #282a36;
 }
 

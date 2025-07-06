@@ -4,8 +4,7 @@ const compositor = "hyprland";
 let get_monitor = if $compositor == "sway" {
  (swaymsg -t get_outputs | from json | where { ($in | get focused) == true } | get name.0) 
 } else if $compositor == "hyprland" {
- let s = (hyprctl -j monitors | from json | where { $in.focused == true } | $in.0 | get name);
- $s
+ (hyprctl -j monitors | from json | where { $in.focused == true } | $in.0 | get name);
 } else {
   "No compositor set"
 };
@@ -41,10 +40,9 @@ def main [ x?: string ] {
   let sel = "Selection";
   let all = "All screens";
   let focused = "Focused window";
-  let clip = "Save to clipboard";
   let color = "Color picker";
 
-  let opts = [$sel, $mon, $all, $focused, $clip, $color, ] | str join "\n";
+  let opts = [$sel, $mon, $all, $focused, $color, ] | str join "\n";
   let pick = if $x == null {
     ($opts | wofi -d -i -p $prompt)
   } else {
@@ -52,21 +50,23 @@ def main [ x?: string ] {
   };
 
   if $pick == $sel {
+    (grim -g (slurp) - | wl-copy);
     (grim -g (slurp));
     print $sel;
   } else if $pick == $mon {
     let m = $get_monitor;
+    (grim -o $m - | wl-copy);
     (grim -o $m);
     print $mon  
   } else if $pick == $all {
+    (grim - | wl-copy)
     (grim);
     print $all;
   } else if $pick == $focused {
-    (grim -g $get_focused_window)
+    let w = $get_focused_window;
+    (grim -g $w - | wl-copy)
+    (grim -g $w)
     print $focused;
-  } else if $pick == $clip {
-    (grim - | wl-copy)
-    print $clip
   } else if $pick == $color {
     (grim -g (slurp) -t ppm - | magick - -format '%[pixel]:p{0,0}' txt:- | split row "\n" | parse "{x},{y}: {srbg}  {hex}  {rest}" | first | get hex | wl-copy)
   } else {

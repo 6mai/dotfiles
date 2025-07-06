@@ -66,8 +66,8 @@
 
           clock = {
               interval = 30;
-              format = "{:%a, %d %b %Y | %H:%M %p}";
-              tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
+              format = "<big>{:%H:%M}</big>";
+              tooltip-format = "<big>{:%Y - %d %B -}</big>\n<tt><small>{calendar}</small></tt>";
           };
 
           cpu = {

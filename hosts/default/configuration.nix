@@ -154,20 +154,20 @@ in
     EDITOR = "hx";
     BROWSER = "brave";
     NIXOS_OZONE_WL = "1";
+    # WLR_NO_HARDWARE_CURSORS = "1";
   };
 
   # programs.firefox.enable = true;
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = [
   #   vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    wget
-    brave
-    helix
-    btop
-    ghostty
-    xfce.thunar
-    # ashell
+    pkgs.wget
+    pkgs.brave
+    pkgs.helix
+    pkgs.btop
+    pkgs.ghostty
+    pkgs.xfce.thunar
   ];
 
   # programs.mtr.enable = true;
