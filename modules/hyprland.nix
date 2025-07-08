@@ -28,6 +28,118 @@ in
   #   };
   # };
 
+  programs.hyprlock = {
+    enable = true;
+    settings = {
+      general = {
+        disable_loading_bar = true;
+        grace = 00;
+        hide_cursor = true;
+        no_fade_in = false;
+      };
+
+      background = [
+        {
+          monitor = "";
+          path = "screenshot";
+          blur_passes = 3;
+          blur_size = 8;
+        }
+      ];
+
+      label = [ 
+          # Time
+        {
+          monitor = "";
+          text = ''cmd[update:1000] echo "<span>$(date +"%H:%M")</span>"'';
+          color = "rgba(216, 222, 233, 0.70)";
+          font_size = 130;
+          font_family = "SF Pro Display Bold";
+          position = "0, 140";
+          halign = "center";
+          valign = "center";
+        }
+          # Day-Month-Date
+        {
+          monitor = "";
+          text = ''cmd[update:1000] echo -e "$(date +"%A, %d %B")"'';
+          color = "rgba(216, 222, 233, 0.70)";
+          font_size = "30";
+          font_family = "SF Pro Display Bold";
+          position = "0, 25";
+          halign = "center";
+          valign = "center";
+        }
+          # User
+        {
+          monitor = "";
+          text = "$USER";
+          color = "rgba(216, 222, 233, 0.70)";
+          font_size = "25";
+          font_family = "SF Pro Display Bold";
+          position = "0, -60";
+          halign = "center";
+          valign = "center";
+        }
+      ];
+
+      input-field = [
+        {
+          size = "250, 60";
+          position = "0, -130";
+          monitor = "";
+          dots_center = true;
+          dots_size = 0.2; # Scale of input-field height, 0.2 - 0.8
+          dots_spacing = 0.2; # Scale of dots' absolute size, 0.0 - 1.0
+          fade_on_empty = false;
+          font_family = "SF Pro Display Bold";
+          font_color = "rgb(202, 211, 245)";
+          inner_color = "rgba(100, 114, 122, 0.4)";
+          outer_color = "rgb(24, 25, 38)";
+          outline_thickness = 2;
+          placeholder_text = ''<span foreground="##ffffff99">Enter Password</span>'';
+          shadow_passes = 2;
+        }
+      ];
+    };
+  };
+  
+  services.hypridle = {
+    enable = true;
+    settings = {
+      general = {    
+        after_sleep_cmd = "hyprctl dispatch dpms on";
+        lock_cmd = "hyprlock";
+      };
+
+      listener = [
+        {
+          timeout = 150;
+          on-timeout = "brightnessctl -s set 10";         # set monitor backlight to minimum, avoid 0 on OLED monitor.
+          on-resume = "brightnessctl -r";                 # monitor backlight restore.
+        }
+        { # turn off keyboard backlight, comment out this section if you dont have a keyboard backlight.
+          timeout = 150;                                          # 2.5min.
+          on-timeout = "brightnessctl -sd rgb:kbd_backlight set 0"; # turn off keyboard backlight.
+          on-resume = "brightnessctl -rd rgb:kbd_backlight";        # turn on keyboard backlight.
+        }
+        {
+          timeout = 300;
+          on-timeout = "loginctl lock-session";
+        }
+        {
+          timeout = 600;
+          on-timeout = "hyprctl dispatch dpms off";
+          on-resume = "hyprctl dispatch dpms on";
+        }
+        {
+          timeout = 1200;                                # 30min
+          on-timeout = "systemctl suspend";                # suspend pc
+        }
+      ];
+    };
+  };
+
   wayland.windowManager.hyprland = {
     enable = true;
     xwayland.enable = true;

@@ -112,7 +112,8 @@ in
   };
 
   services.gnome.gnome-keyring.enable = true;
-  security.pam.services.swaylock = {}; # for swaylock 
+  # security.pam.services.swaylock = {}; # for swaylock 
+  security.pam.services.hyprlock = {};
   security.polkit.enable = true; # for sway using home manager 
   services.gvfs.enable = true; # Mount, trash, and other functionalities
   services.tumbler.enable = true; # Thumbnail support for images
@@ -154,6 +155,7 @@ in
     EDITOR = "hx";
     BROWSER = "brave";
     NIXOS_OZONE_WL = "1";
+		GRIM_DEFAULT_DIR = "${user.homeDir}/files/screencaps/";
     # WLR_NO_HARDWARE_CURSORS = "1";
   };
 

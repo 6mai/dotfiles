@@ -28,6 +28,7 @@
     emacsGcc
     rust-analyzer
     sparrow
+    surfraw
   ];
 
   home.file = {
