@@ -7,8 +7,6 @@
 		grim
 		slurp
 		wl-clipboard
-		swayidle
-		swaylock-effects
 		wev
 		libnotify
 	];
@@ -22,7 +20,7 @@
 			layout = [
 				{
 					label = "lock";
-					action = "swaylock";
+					action = "loginctl lock-session";
 					text = "Lock";
 					keybind = "l";
 				}
@@ -57,6 +55,65 @@
 				    keybind = "r";
 				}
 			];
+
+			style = ''
+			
+				* {
+				  font-family: "Fira Sans Semibold", FontAwesome, Roboto, Helvetica, Arial, sans-serif;
+					background-image: none;
+					transition: 20ms;
+					box-shadow: none;
+				}
+
+			  window {
+			    background: rgba(43, 44, 52, 0.8);
+			  }
+  
+			  button {
+					margin: 6px;
+	        border-color: rgba(210,0,255,0.2);
+	        text-decoration-color: #1FFF11;
+					font-size: 16px;
+	        color: #FFFFFF;
+	        background-color: #3b3f51;
+	        border-style: solid;
+	        border-width: 2px;
+					border-radius: 22px;
+	        background-repeat: no-repeat;
+	        background-position: center;
+	        background-size: 25%;
+			  }
+
+				button:focus, button:active, button:hover {
+					outline-style: none;
+					border-color: rgba(210,0,211,0.8);
+					background-color: #817fcc;
+				}
+				
+				#lock {
+					background-image: image(url("${pkgs.wlogout}/share/wlogout/assets/lock.svg"));
+				 }
+				
+				#logout {
+					background-image: image(url("${pkgs.wlogout}/share/wlogout/assets/logout.svg"));
+				 }
+				
+				#suspend {
+					background-image: image(url("${pkgs.wlogout}/share/wlogout/assets/suspend.svg"));
+				 }
+				
+				#hibernate {
+					background-image: image(url("${pkgs.wlogout}/share/wlogout/assets/hibernate.svg"));
+				 }
+				
+				#shutdown {
+					background-image: image(url("${pkgs.wlogout}/share/wlogout/assets/shutdown.svg"));
+				 }
+				
+				#reboot {
+					background-image: url("${pkgs.wlogout}/share/wlogout/assets/reboot.svg");
+				 }
+			'';
 		};
 	};
 		
