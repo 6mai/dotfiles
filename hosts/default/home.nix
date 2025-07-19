@@ -1,4 +1,7 @@
-{ config, pkgs, user, lib, ... }:
+{ config, pkgs, user, lib, inputs, ... }:
+let
+  test = inputs.nix-colors.lib.conversions.hexToRGBString "," "0088ff";
+in
 {
   imports = [
     # ./../../modules/sway/default.nix
@@ -9,7 +12,12 @@
     ./../../modules/mpv/default.nix
     ./../../modules/tmux.nix
     ./../../modules/desktop_utils.nix
+    ./../../modules/wofi.nix
+    inputs.nix-colors.homeManagerModules.default
   ];
+
+  colorScheme = inputs.nix-colors.colorSchemes.onedark;
+  # colorScheme = inputs.nix-colors.colorSchemes.dracula;
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "${user.userName}";
@@ -29,6 +37,13 @@
     rust-analyzer
     sparrow
     surfraw
+    wget
+    btop
+    xfce.thunar
+    krusader
+    wineWowPackages.waylandFull
+    bottles
+    doublecmd
   ];
 
   home.file = {
@@ -43,6 +58,7 @@
     EDITOR = "hx";
     BROWSER = "brave";
     TERMINAL = "ghostty";
+    TEST = "${test}";
   };
     
   # Let Home Manager install and manage itself.
@@ -74,6 +90,20 @@
 
   
   programs = {
+
+    
+    chromium = {
+      enable = true;
+      package = pkgs.brave;
+      extensions = [
+        { id = "cjpalhdlnbpafiamejdnhcphjbkeiagm"; } # ublock origin
+        { id = "dbepggeogbaibhgnhhndojpepiihcmeb"; } # vimium
+      ];
+      commandLineArgs = [
+        "--disable-features=WebRtcAllowInputVolumeAdjustment"
+      ];
+    };
+
     kitty.enable = true;
     
     tealdeer = {
@@ -114,16 +144,6 @@
           # "ctrl+h=goto_split:left"
           # "ctrl+l=goto_split:right"
         ];
-      };
-    };
-
-    wofi = {
-      enable = true;
-      settings = {
-        location = "bottom-right";
-        allow_markup = true;
-        width = 1250;
-        always_parse_args = true;
       };
     };
 

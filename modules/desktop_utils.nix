@@ -1,4 +1,7 @@
-{ lib, pkgs, config, user, ... }:
+{ lib, pkgs, config, user, hexToRgb, ... }:
+let
+    col = config.colorScheme.palette;
+in
 {
 	home.packages = with pkgs; [
 		# necessary
@@ -26,7 +29,7 @@
 				}
 				{
 				    label = "hibernate";
-				    action = "systemctl hibernate";
+				    action = "loginctl lock-session && systemctl hibernate";
 				    text = "Hibernate";
 				    keybind = "h";
 				}
@@ -44,7 +47,7 @@
 				}
 				{
 				    label = "suspend";
-				    action = "systemctl suspend";
+				    action = "loginctl lock-session && systemctl suspend";
 				    text = "Suspend";
 				    keybind = "u";
 				}
@@ -66,16 +69,16 @@
 				}
 
 			  window {
-			    background: rgba(43, 44, 52, 0.8);
+			    background: rgba(${hexToRgb "," col.base02}, 0.8);
 			  }
   
 			  button {
 					margin: 6px;
-	        border-color: rgba(210,0,255,0.2);
-	        text-decoration-color: #1FFF11;
-					font-size: 16px;
-	        color: #FFFFFF;
-	        background-color: #3b3f51;
+	        border-color: rgba(${hexToRgb "," col.base0C},0.2);
+	        text-decoration-color: #${col.base00};
+					font-size: 20px;
+	        color: #${col.base06};
+	        background-color: #${col.base01};
 	        border-style: solid;
 	        border-width: 2px;
 					border-radius: 22px;
@@ -86,32 +89,32 @@
 
 				button:focus, button:active, button:hover {
 					outline-style: none;
-					border-color: rgba(210,0,211,0.8);
-					background-color: #817fcc;
+					border-color: rgba(${hexToRgb "," col.base0C},0.8);
+					background-color: #${col.base01};
 				}
 				
 				#lock {
-					background-image: image(url("${pkgs.wlogout}/share/wlogout/assets/lock.svg"));
+					background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/lock.png"));
 				 }
 				
 				#logout {
-					background-image: image(url("${pkgs.wlogout}/share/wlogout/assets/logout.svg"));
+					background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/logout.png"));
 				 }
 				
 				#suspend {
-					background-image: image(url("${pkgs.wlogout}/share/wlogout/assets/suspend.svg"));
+					background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/suspend.png"));
 				 }
 				
 				#hibernate {
-					background-image: image(url("${pkgs.wlogout}/share/wlogout/assets/hibernate.svg"));
+					background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/hibernate.png"));
 				 }
 				
 				#shutdown {
-					background-image: image(url("${pkgs.wlogout}/share/wlogout/assets/shutdown.svg"));
+					background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/shutdown.png"));
 				 }
 				
 				#reboot {
-					background-image: url("${pkgs.wlogout}/share/wlogout/assets/reboot.svg");
+					background-image: url("${pkgs.wlogout}/share/wlogout/icons/reboot.png");
 				 }
 			'';
 		};
@@ -121,35 +124,36 @@
 		# swww.enable = true;
 		mako = {
 	    enable = true;
-	    # settings = {
-	    #   actions = true;
-	    #   anchor = "top-right";
-	    #   backgroundColor = "#282a36";
-	    #   borderColor = "#bd93f9";
-	    #   borderSize = 3;
-	    #   defaultTimeout = 3000;
-	    #   # font = "Mononoki Nerd Font Mono 10";
-	    #   height = 150;
-	    #   width = 300;
-	    #   icons = true;
-	    #   textColor = "#f8f8f2";
-	    #   layer = "overlay";
-	    #   sort = "-time";
-	    #   "urgency=low" = {
-	    #     border-color="#282a36";
-	    #     };
-	    #   "urgency=normal" = {
-	    #     border-color="#bd93f9";
-	    #     };
-	    #   "urgency=high" = {
-	    #     border-color="#ff5555";
-	    #     default-timeout=0;
-	    #     };
-	    #   "category=mpd" = {
-	    #     default-timeout=2000;
-	    #     group-by="category";
-	    #     };
-	    #   };
+	    settings = {
+	      actions = true;
+	      anchor = "top-right";
+	      background-color = "#${col.base01}";
+	      border-color = "#${col.base0C}";
+	      border-size = 3;
+	      border-radius = 12;
+	      default-timeout = 5000;
+	      font = "Mononoki Nerd Font Mono 10";
+	      height = 150;
+	      width = 300;
+	      icons = true;
+	      text-color = "#${col.base06}";
+	      layer = "overlay";
+	      sort = "-time";
+	      "urgency=low" = {
+	        border-color="#${col.base05}";
+	        };
+	      "urgency=normal" = {
+	        border-color="#${col.base0C}";
+	        };
+	      "urgency=high" = {
+	        border-color="#${col.base08}";
+	        default-timeout=0;
+	        };
+	      "category=mpd" = {
+	        default-timeout=2000;
+	        group-by="category";
+	        };
+	      };
 		};
 
 		gammastep = {

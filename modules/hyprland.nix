@@ -1,4 +1,4 @@
-{ config, pkgs, user, ... }:
+{ config, pkgs, user, hexToRgb, ... }:
 let
   future-cyan = pkgs.fetchFromGitLab {
     owner = "Pummelfisch";
@@ -33,7 +33,7 @@ in
     settings = {
       general = {
         disable_loading_bar = true;
-        grace = 00;
+        grace = 10;
         hide_cursor = true;
         no_fade_in = false;
       };
@@ -52,7 +52,7 @@ in
         {
           monitor = "";
           text = ''cmd[update:1000] echo "<span>$(date +"%H:%M")</span>"'';
-          color = "rgba(216, 222, 233, 0.70)";
+          color = "rgba(${hexToRgb "," config.colorScheme.palette.base06}, 0.70)";
           font_size = 130;
           font_family = "SF Pro Display Bold";
           position = "0, 140";
@@ -63,7 +63,7 @@ in
         {
           monitor = "";
           text = ''cmd[update:1000] echo -e "$(date +"%A, %d %B")"'';
-          color = "rgba(216, 222, 233, 0.70)";
+          color = "rgba(${hexToRgb "," config.colorScheme.palette.base06}, 0.70)";
           font_size = "30";
           font_family = "SF Pro Display Bold";
           position = "0, 25";
@@ -74,7 +74,7 @@ in
         {
           monitor = "";
           text = "$USER";
-          color = "rgba(216, 222, 233, 0.70)";
+          color = "rgba(${hexToRgb "," config.colorScheme.palette.base06}, 0.70)";
           font_size = "25";
           font_family = "SF Pro Display Bold";
           position = "0, -60";
@@ -93,11 +93,11 @@ in
           dots_spacing = 0.2; # Scale of dots' absolute size, 0.0 - 1.0
           fade_on_empty = false;
           font_family = "SF Pro Display Bold";
-          font_color = "rgb(202, 211, 245)";
-          inner_color = "rgba(100, 114, 122, 0.4)";
-          outer_color = "rgb(24, 25, 38)";
+          font_color = "rgba(${hexToRgb "," config.colorScheme.palette.base06}, 0.70)";
+          inner_color = "rgba(${hexToRgb "," config.colorScheme.palette.base02}, 0.40)";
+          outer_color = "rgb(${config.colorScheme.palette.base01})";
           outline_thickness = 2;
-          placeholder_text = ''<span foreground="##ffffff99">Enter Password</span>'';
+          placeholder_text = ''<span foreground="##${config.colorScheme.palette.base06}99">Enter Password</span>'';
           shadow_passes = 2;
         }
       ];
@@ -182,8 +182,8 @@ in
         resize_on_border = true;
         # "col.active_border" = "rgba(50,200,255,0.9) rgba(0,255,150,0.9) 45deg";
         # "col.active_border" = "0xff0000ff";
-        "col.active_border" = "rgba(10,0,255,0.8) rgba(10,50,255,0.8) 45deg";
-        "col.inactive_border" = "rgba(10,0,255,0.2)";
+        "col.active_border" = "rgba(${hexToRgb "," config.colorScheme.palette.base0C},0.8) rgba(${hexToRgb "," config.colorScheme.palette.base0D},0.8) 45deg";
+        "col.inactive_border" = "rgba(${hexToRgb "," config.colorScheme.palette.base0C},0.2)";
       };
 
       misc = {
@@ -226,7 +226,7 @@ in
         "$mod CONTROL, right, swapwindow, r"
         "$mod CONTROL, up, swapwindow, u"
         "$mod CONTROL, down, swapwindow, d"
-        ", Print, exec, nu ${user.homeDir}/dotfiles/scripts/screenshot.nu"
+        ", Print, exec,nu ${user.homeDir}/dotfiles/scripts/screenshot.nu"
         # Example special workspace (scratchpad)
         "$mod, S, togglespecialworkspace, magic"
         "$mod SHIFT, S, movetoworkspace, special:magic"

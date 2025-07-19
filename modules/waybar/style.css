@@ -13,6 +13,10 @@ window#waybar {
     color: #ffffff;
     transition: background-color 0.5s;
     border-radius: 8;
+    /* border: solid; */
+    /* border-width: 2px; */
+    /* border-color: #ffffff; */
+    /* margin: 3px; */
 }
 .modules-left,
 .modules-right,
@@ -28,7 +32,7 @@ window#waybar.hidden {
 
 #window {
     font-family: 'Sarasa Gothic SC', sans-serif;
-    margin: 0px 4px 5px 0px;
+    margin: 0px 4px 0px 6px;
 }
 
 #clock {

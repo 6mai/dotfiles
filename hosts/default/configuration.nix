@@ -14,6 +14,7 @@ let
     homeDir = "/home/${user.userName}";
     dotfiles = "${user.homeDir}/dotfiles/";
   };
+  hexToRgb = inputs.nix-colors.lib.conversions.hexToRGBString;
 in
 {
   imports =
@@ -22,6 +23,13 @@ in
       inputs.home-manager.nixosModules.default
       ./../../modules/tor/default.nix
   ];
+
+  virtualisation.docker = {
+    enable = true;
+  };
+
+  virtualisation.libvirtd.enable = true;
+  programs.virt-manager.enable = true;
 
   hardware = {
     opengl.enable = true;
@@ -32,6 +40,7 @@ in
       inherit inputs;
       inherit user;
       inherit system;
+      inherit hexToRgb;
     };
     users = {
       ${user.userName} = import ./home.nix;
@@ -88,12 +97,12 @@ in
   systemd = {
     tmpfiles.settings = {
       "files_home" = {
-        "${user.homeDir}/files/screencaps/" = { d.mode = "0755"; };
-        "${user.homeDir}/files/wallpapers/" = { d.mode = "0755"; };
-        "${user.homeDir}/files/webms/" = { d.mode = "0755"; };
+        "${user.homeDir}/files/screencaps/" = { d.mode = "0755"; d.user = "${user.userName}"; };
+        "${user.homeDir}/files/wallpapers/" = { d.mode = "0755"; d.user = "${user.userName}"; };
+        "${user.homeDir}/files/webms/" = { d.mode = "0755"; d.user = "${user.userName}"; };
       };
       "local_bin" = {
-        "${user.homeDir}/.local/bin/" = { d.mode = "0755"; };
+        "${user.homeDir}/.local/bin/" = { d.mode = "0755"; d.user = "${user.userName}"; };
       };
     };
   };
@@ -135,7 +144,7 @@ in
   # Define a user account. Don't forget to set a password with ‘passwd’.
    users.users.${user.userName} = {
      isNormalUser = true;
-     extraGroups = [ "wheel" "seat" ]; # Enable ‘sudo’ for the user.
+     extraGroups = [ "wheel" "seat" "libvirtd" "kvm" "docker" ]; # Enable ‘sudo’ for the user.
      packages = with pkgs; [
        tree
      ];
@@ -155,7 +164,7 @@ in
     EDITOR = "hx";
     BROWSER = "brave";
     NIXOS_OZONE_WL = "1";
-		GRIM_DEFAULT_DIR = "${user.homeDir}/files/screencaps/";
+		GRIM_DEFAULT_DIR = "${user.homeDir}/files/screencaps";
     # WLR_NO_HARDWARE_CURSORS = "1";
   };
 
@@ -164,12 +173,7 @@ in
   # You can use https://search.nixos.org/ to find more packages (and options).
   environment.systemPackages = [
   #   vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    pkgs.wget
-    pkgs.brave
-    pkgs.helix
-    pkgs.btop
-    pkgs.ghostty
-    pkgs.xfce.thunar
+    pkgs.virtiofsd
   ];
 
   # programs.mtr.enable = true;
@@ -215,6 +219,7 @@ in
     roboto
     # nerd-fonts."m+" # 200mb nip coding fonts
     nerd-fonts.symbols-only
+    nerd-fonts.mononoki
   ];
 
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
