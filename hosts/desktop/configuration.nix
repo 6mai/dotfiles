@@ -8,7 +8,7 @@ let
     arch = "x86-64_linux";
   };
   user = {
-    userName = "nixOS";
+    userName = "station";
     hostName = "nixos";
     email = "987654321mai6@gmail.com";
     homeDir = "/home/${user.userName}";
@@ -143,7 +143,6 @@ in
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
    users.users.${user.userName} = {
-    group = "${user.userName}";   
      isNormalUser = true;
      extraGroups = [ "wheel" "seat" "libvirtd" "kvm" "docker" ]; # Enable ‘sudo’ for the user.
      packages = with pkgs; [
@@ -213,15 +212,33 @@ in
     settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
   }];
 
-  fonts.packages = with pkgs; [
-    powerline-symbols
-    font-awesome
-    nerd-fonts.fira-code
-    roboto
-    # nerd-fonts."m+" # 200mb nip coding fonts
-    nerd-fonts.symbols-only
-    nerd-fonts.mononoki
-  ];
+  fonts = {
+    enableDefaultPackages = true;
+    packages = with pkgs; [ 
+      powerline-symbols
+      font-awesome
+      nerd-fonts.fira-code
+      roboto
+      # nerd-fonts."m+" # 200mb nip coding fonts
+      nerd-fonts.symbols-only
+      nerd-fonts.mononoki
+      
+      noto-fonts
+      # nip font
+      noto-fonts-cjk-sans
+      dejavu_fonts
+      ipafont
+      kochi-substitute
+    ];
+
+    fontconfig = {
+      defaultFonts = {
+        monospace = [ "DejaVu Sans Mono" "IPAGothic" ];
+        sansSerif = [ "DejaVu Sans" "IPAPGothic" ];
+        serif = [ "DejaVu Serif" "IPAPMincho" ];
+      };
+    };
+  };
 
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   system.stateVersion = "25.05"; # Did you read the comment?
