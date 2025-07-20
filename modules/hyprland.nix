@@ -166,6 +166,7 @@ in
 
       input = {
         repeat_delay = 300;
+        sensitivity = -0.6;
       };
 
       cursor = {
@@ -175,6 +176,14 @@ in
       };
 
       general = {
+        monitor = [
+           "HDMI-A-1, preferred, 0x0, 1.25" 
+           "DP-1, preferred, auto, 1" 
+        ];
+        animation = [
+          "workspaces, 0, 2, default, fade"
+          "windows, 1, 8, default, gnomed"
+        ];
         layout = "master";
         gaps_in = 6;
         gaps_out = 8;

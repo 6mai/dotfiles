@@ -97,6 +97,7 @@ in
   systemd = {
     tmpfiles.settings = {
       "files_home" = {
+        "${user.homeDir}/files/" = { d = { mode = "0755"; user = "${user.userName}"; group = "${user.userName}"; }; };
         "${user.homeDir}/files/screencaps/" = { d = { mode = "0755"; user = "${user.userName}"; group = "${user.userName}"; }; };
         "${user.homeDir}/files/wallpapers/" = { d = { mode = "0755"; user = "${user.userName}"; group = "${user.userName}"; }; };
         "${user.homeDir}/files/webms/" = { d = { mode = "0755"; user = "${user.userName}"; group = "${user.userName}"; }; };
@@ -141,11 +142,12 @@ in
   # Enable touchpad support (enabled default in most desktopManager).
   # services.libinput.enable = true;
 
+  users.groups.${user.userName} = {};
   # Define a user account. Don't forget to set a password with ‘passwd’.
    users.users.${user.userName} = {
     group = "${user.userName}";   
      isNormalUser = true;
-     extraGroups = [ "wheel" "seat" "libvirtd" "kvm" "docker" ]; # Enable ‘sudo’ for the user.
+     extraGroups = [ "wheel" "seat" "libvirtd" "kvm" "docker" "${user.userName}" ]; # Enable ‘sudo’ for the user.
      packages = with pkgs; [
        tree
      ];
