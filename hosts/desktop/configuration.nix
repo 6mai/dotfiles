@@ -8,7 +8,7 @@ let
     arch = "x86-64_linux";
   };
   user = {
-    nixConfName = "desktop"; # important for nu rebuild script; it's the name of the conf in the flake 
+    nixConfName = "desktop"; # important for nu rebuild script; must be the same as the conf name in the flake 
     userName = "station";
     hostName = "nixos";
     email = "987654321mai6@gmail.com";
@@ -91,7 +91,7 @@ in
 	        --remember
 	        --remember-session
 	        --user-menu
-	        --sessions ${pkgs.hyprland}/share/wayland-sessions
+	        # --sessions ${pkgs.hyprland}/share/wayland-sessions
 	        --power-shutdown "systemctl shotdown"
 	        --power-reboot "systemctl reboot"
 	        --cmd ${pkgs.hyprland}/bin/hyprland;bash'';
@@ -105,6 +105,17 @@ in
       default_session = login;
 	  };                                                                     
 	};
+
+  serviceConfig = {
+      Type = "idle";
+      StandardInput = "tty";
+      StandardOutput = "tty";
+      StandardError = "journal"; # Without this errors will spam on screen
+      # Without these bootlogs will spam on screen
+      TTYReset = true;
+      TTYVHangup = true;
+      TTYVTDisallocate = true;
+    };
 
   systemd = {
     tmpfiles.settings = {
