@@ -106,7 +106,7 @@ in
 	  };                                                                     
 	};
 
-  serviceConfig = {
+  systemd.services.greetd.serviceConfig = {
       Type = "idle";
       StandardInput = "tty";
       StandardOutput = "tty";
