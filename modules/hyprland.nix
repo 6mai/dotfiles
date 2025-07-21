@@ -197,6 +197,7 @@ in
 
       misc = {
         force_default_wallpaper = 2;
+        disable_splash_rendering = true;
       };
 
       decoration = {

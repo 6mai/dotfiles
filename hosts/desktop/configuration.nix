@@ -8,6 +8,7 @@ let
     arch = "x86-64_linux";
   };
   user = {
+    nixConfName = "desktop"; # important for nu rebuild script; it's the name of the conf in the flake 
     userName = "station";
     hostName = "nixos";
     email = "987654321mai6@gmail.com";

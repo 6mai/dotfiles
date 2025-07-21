@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ lib, pkgs, user, ... }:
 {
   programs = {
     carapace.enable = true;
@@ -130,6 +130,20 @@
         )
         # mkdir ($nu.data-dir | path join "vendor/autoload")
         # starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
+        
+        def rebuild [test?: string] {
+          if $test == "test" {
+            (sudo nixos-rebuild test --flake ~/dotfiles/.#${user.nixConfName})
+          } else {
+            use std/dirs;
+            (dirs add ~/dotfiles/)
+            (git add .)
+            let gen = (sudo nix-env --list-generations --profile /nix/var/nix/profiles/system | lines | last)
+            (git commit -am $gen)
+            (sudo nixos-rebuild switch --flake ~/dotfiles/.#${user.nixConfName})
+            (dirs prev)
+          }
+        }
       '';
     };
   };
