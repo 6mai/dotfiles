@@ -148,6 +148,8 @@ in
       exec-once = [
         "killall -q waybar;sleep .5 && waybar" 
         "systemctl --user start hyprpolkitagent"
+        "[workspace 2 silent] ghostty -e tmux"
+        "[workspace 3 silent] brave"
       ];
 
       "$mod" = "SUPER";
