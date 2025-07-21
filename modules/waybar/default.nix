@@ -11,7 +11,7 @@ in
     # Pulseaudio
     pasystray.enable = true;
     # Battery Warning
-    cbatticon.enable = true;
+    cbatticon.enable = false;
   };
 
   programs.waybar = {
@@ -141,7 +141,7 @@ in
     	style = ''
         * {
             font-family: FontAwesome, Roboto, Helvetica, Arial, sans-serif;
-            font-size: 16px;
+            font-size: 19px;
             margin: 0;
             padding: 0;
             border: none;

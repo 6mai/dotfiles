@@ -31,8 +31,11 @@ in
   virtualisation.libvirtd.enable = true;
   programs.virt-manager.enable = true;
 
-  hardware = {
-    opengl.enable = true;
+  hardware.graphics = {
+    enable = true;
+    extraPackages = [
+      pkgs.intel-media-driver
+    ];
   };
 
   home-manager = {
@@ -81,16 +84,24 @@ in
 	services.greetd = {                                                      
 	  enable = true;                                                         
 	  settings = rec {                                                           
-	    # default_session = {                                                  
-	    #   command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd sway";
-	    #   user = "${user.userName}";                                                  
-	    # };                                                                   
-      initial_session = {
-        command = "${pkgs.hyprland}/bin/hyprland;bash";
-        # command = "${pkgs.sway}/bin/sway";
+	    login = {                                                  
+	      command = ''${pkgs.greetd.tuigreet}/bin/tuigreet
+	        --time
+	        --remember
+	        --remember-session
+	        --user-menu
+	        --sessions ${pkgs.hyprland}/share/wayland-sessions
+	        --power-shutdown "systemctl shotdown"
+	        --power-reboot "systemctl reboot"
+	        --cmd ${pkgs.hyprland}/bin/hyprland;bash'';
 	      user = "${user.userName}";                                                  
-      };
-      default_session = initial_session;
+	    };                                                                   
+      # initial_session = {
+      #   command = "${pkgs.hyprland}/bin/hyprland;bash";
+      #   # command = "${pkgs.sway}/bin/sway";
+	     #  user = "${user.userName}";                                                  
+      # };
+      default_session = login;
 	  };                                                                     
 	};
 

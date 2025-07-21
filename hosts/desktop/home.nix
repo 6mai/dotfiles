@@ -142,7 +142,7 @@ in
       settings = {
         command = "nu";
         # theme = "catppuccin-mocha";
-        font-size = 14;
+        font-size = 17;
         keybind = [
           # "ctrl+h=goto_split:left"
           # "ctrl+l=goto_split:right"
