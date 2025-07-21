@@ -40,7 +40,7 @@ in
     ];
   };
 
-  services.xserver.videoDrivers = ["nvidia"];
+  # services.xserver.videoDrivers = ["nvidia"];
 
   home-manager = {
     extraSpecialArgs = {
