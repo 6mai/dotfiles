@@ -148,7 +148,7 @@ in
       exec-once = [
         "killall -q waybar;sleep .5 && waybar" 
         "systemctl --user start hyprpolkitagent"
-        "[workspace 2 silent] ghostty -e tmux"
+        "[workspace 2 silent] ghostty -e 'nu -e tmux'"
         "[workspace 3 silent] brave"
       ];
 
@@ -239,6 +239,7 @@ in
         "$mod CONTROL, up, swapwindow, u"
         "$mod CONTROL, down, swapwindow, d"
         ", Print, exec,nu ${user.homeDir}/dotfiles/scripts/screenshot.nu"
+        "$mod, M, exec,nu ${user.homeDir}/dotfiles/scripts/copy_nix_devenvs.nu"
         # Example special workspace (scratchpad)
         "$mod, S, togglespecialworkspace, magic"
         "$mod SHIFT, S, movetoworkspace, special:magic"
