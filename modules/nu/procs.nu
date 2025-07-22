@@ -1,3 +1,18 @@
+# copy default dev flake into a folder
+def dev-envs [] {
+  let dir = $env.HOME + "/dotfiles/dev_envs/"
+  
+  let entries = (ls $dir | get name | path parse );
+  let pick = ($entries | get stem | to text) | wofi -d -i -p "Launch script"
+
+  let flake_path = $entries | where { ($pick ) == $in.stem } | first | $in.parent + "/" + $in.stem + "." + $in.extension;
+  let dest = ((pwd) | path join "flake.nix");
+
+  (cp $flake_path $dest)
+  print "Copied development flake!"
+}
+
+# generates rust docs for primary dependencies only
 def primary_deps [echo?: string] {
   let full_command = $"cargo doc --no-deps (cargo tree --depth 1 | parse '{tree} {dep} {ver}' | skip 1 | select dep | reduce -f '' {|elt, acc| $acc + ' -p ' + $elt.dep}) --open"
   if $echo != null {
@@ -12,6 +27,8 @@ def tt [...cont] {
   }
 }
 
+
+# fixing LN ship that online TTS reads wrong
 # 『涸れ森』と呼ばれる場所になった。私が〝人〟であり、クァール"
 
 def find_and_replace [input: string, find: string, replace: string] {
@@ -68,6 +85,8 @@ def replace_annoying_chars_epubs [path: string] {
   (rm -r $name)
 }
 
+
+# turn rar files to zip so comicrack can read them
 def rar2zip [path?: string] {
   let temp_name = "_" + (random uuid);
   let file_name = ($path | default '') | path parse | get stem; 

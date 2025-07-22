@@ -38,7 +38,6 @@
         vim = "hx";
         nano = "hx";
         fg = "job unfreeze";
-        dev-envs ="nu ${user.homeDir}/dotfiles/scripts/copy_nix_devenvs.nu";
         c = "clear";
       };
 
