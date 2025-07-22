@@ -1,24 +1,3 @@
-$env.ODIN_ROOT = "C:\\Users\\station\\.odin";
-alias c = clear;
-alias cdpr = cd F:\\Projects\\;
-alias co = cd C:\Users\station\.odin\;
-alias p1 = cd F:\Projects\learning_examples\iced-rs;
-alias p2 = cd F:\Projects\learning_examples\egui;
-alias p4 = cd F:\Projects\learning_examples\web\css\course1\;
-alias p6 = cd F:\Projects\learning_examples\web\axum\intro;
-alias p3 = cd F:\Projects\live_server\rust_live_server;
-alias p7 = cd F:\Projects\learning_examples\games\macroquad_book;
-alias p5 = cd F:\Projects\knowledge_vault\kv_server;
-alias wr = cd F:\writing\;
-alias nu-cfg = hx $nu.config-path;
-alias ll = ls -la
-
-let aliases = {
-  c: "clear"
-};
-
-$env.config.show_banner = false;
-
 def primary_deps [echo?: string] {
   let full_command = $"cargo doc --no-deps (cargo tree --depth 1 | parse '{tree} {dep} {ver}' | skip 1 | select dep | reduce -f '' {|elt, acc| $acc + ' -p ' + $elt.dep}) --open"
   if $echo != null {

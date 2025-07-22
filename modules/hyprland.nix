@@ -239,7 +239,6 @@ in
         "$mod CONTROL, up, swapwindow, u"
         "$mod CONTROL, down, swapwindow, d"
         ", Print, exec,nu ${user.homeDir}/dotfiles/scripts/screenshot.nu"
-        "$mod, M, exec,nu ${user.homeDir}/dotfiles/scripts/copy_nix_devenvs.nu"
         # Example special workspace (scratchpad)
         "$mod, S, togglespecialworkspace, magic"
         "$mod SHIFT, S, movetoworkspace, special:magic"
