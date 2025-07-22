@@ -17,7 +17,13 @@
           {
             nativeBuildInputs = with pkgs; [
               pkgs.odin
+              pkgs.ols
             ];
+
+            odin = "${pkgs.odin}";
+            libs = "${pkgs.odin}/share/";
+            core = "${pkgs.odin}/share/core";
+            vendor = "${pkgs.odin}/share/vendor";
           };
     };
 }
