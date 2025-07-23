@@ -61,7 +61,14 @@ in
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
     package = config.boot.kernelPackages.nvidiaPackages.stable;  
   };
-
+  {
+  	hardware.nvidia.prime = {
+  		# Make sure to use the correct Bus ID values for your system!
+  		# intelBusId = "PCI:0:2:0";
+  		nvidiaBusId = "PCI:1:0:0";
+                  # amdgpuBusId = "PCI:54:0:0"; For AMD GPU
+  	};
+  }
   home-manager = {
     extraSpecialArgs = {
       inherit inputs;
