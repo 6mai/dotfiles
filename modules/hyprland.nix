@@ -29,6 +29,37 @@ in
   #   };
   # };
 
+  services.kanshi = {
+    enable = true;
+    systemdTarget = "hyprland-session.target";
+    profiles = {
+      hdmi-only = {
+        outputs = [
+          {
+            criteria = "HDMI-A-1";
+            status = "enable";
+          }
+          {
+            criteria = "DP-1";
+            status = "disable";
+          }
+        ];
+      };
+      dual = {
+        outputs = [
+          {
+            criteria = "HDMI-A-1";
+            status = "enable";
+          }
+          {
+            criteria = "DP-1";
+            status = "enable";
+          }
+        ];
+      };
+    };
+  };
+
   programs.hyprlock = {
     enable = true;
     settings = {
@@ -152,6 +183,7 @@ in
         "systemctl --user start hyprpolkitagent"
         "[workspace 2 silent] ghostty -e 'nu -e tmux'"
         "[workspace 3 silent] brave"
+        "kanshi"
       ];
 
       "$mod" = "SUPER";
@@ -180,10 +212,10 @@ in
       };
 
       general = {
-        # monitor = [
-        #    "HDMI-A-1, preferred, 0x0, 1.25" 
-        #    "DP-1, preferred, auto, 1" 
-        # ];
+        monitor = [
+           "HDMI-A-1, preferred, 0x0, 1.25" 
+           "DP-1, preferred, auto, 1" 
+        ];
         animation = [
           "workspaces, 0, 2, default, fade"
           "windows, 1, 8, default, gnomed"
