@@ -190,7 +190,7 @@ in
     BROWSER = "brave";
     NIXOS_OZONE_WL = "1";
 		GRIM_DEFAULT_DIR = "${user.homeDir}/files/screencaps";
-    LIBVA_DRIVER_NAME = "iHD";
+    # LIBVA_DRIVER_NAME = "iHD";
     # WLR_NO_HARDWARE_CURSORS = "1";
   };
 
