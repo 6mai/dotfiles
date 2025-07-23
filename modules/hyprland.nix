@@ -220,8 +220,10 @@ in
       general = {
         monitor = [
            "HDMI-A-1, preferred, 0x0, 1.25" 
-           "DP-1, preferred, auto, 0" 
-           "DP-3, preferred, auto, 0" 
+           "DP-1, preferred, auto, 1" 
+           "DP-3, preferred, auto, 1" 
+           "DP-1, disable" 
+           "DP-3, disable" 
         ];
         animation = [
           "workspaces, 0, 2, default, fade"
