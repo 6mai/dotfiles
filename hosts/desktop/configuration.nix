@@ -51,7 +51,7 @@ in
 
   hardware.nvidia = {
     modesetting.enable = true;
-    powerManagement.enable = false;
+    powerManagement.enable = true;
     powerManagement.finegrained = false;
 
     open = false;
@@ -64,7 +64,7 @@ in
 
   # boot.kernelParams = [ "i915.force_probe=" ];
 	hardware.nvidia.prime = {
-	  # sync.enable = true;
+	  sync.enable = true;
 		# Make sure to use the correct Bus ID values for your system!
 		intelBusId = "PCI:00:02:0";
 		nvidiaBusId = "PCI:01:00:0";

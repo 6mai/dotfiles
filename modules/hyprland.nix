@@ -179,8 +179,8 @@ in
     # nvidiaPatches = true;
     settings = {
       exec-once = [
-        "waybar" 
-        # "killall -q waybar;sleep .5 && waybar" 
+        # "waybar" 
+        "killall -q waybar;sleep .5 && waybar" 
         "systemctl --user start hyprpolkitagent"
         "[workspace 2 silent] ghostty -e 'nu -e tmux'"
         "[workspace 3 silent] brave"
