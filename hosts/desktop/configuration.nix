@@ -121,12 +121,12 @@ in
 	      command = ''${pkgs.greetd.tuigreet}/bin/tuigreet --time --remember --remember-session --user-menu --sessions ${pkgs.hyprland}/share/wayland-sessions --power-shutdown "systemctl shotdown" --power-reboot "systemctl reboot" --cmd ${pkgs.hyprland}/bin/hyprland;bash'';
 	      user = "${user.userName}";                                                  
 	    };                                                                   
-      # initial_session = {
-      #   command = "${pkgs.hyprland}/bin/hyprland;bash";
-      #   # command = "${pkgs.sway}/bin/sway";
-	     #  user = "${user.userName}";                                                  
-      # };
-      default_session = login;
+      initial_session = {
+        command = "${pkgs.hyprland}/bin/hyprland;bash";
+        # command = "${pkgs.sway}/bin/sway";
+	      user = "${user.userName}";                                                  
+      };
+      default_session = initial_session;
 	  };                                                                     
 	};
 
