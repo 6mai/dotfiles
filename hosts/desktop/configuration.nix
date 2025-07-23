@@ -62,7 +62,7 @@ in
     package = config.boot.kernelPackages.nvidiaPackages.stable;  
   };
 
-  boot.kernelParams = [ "i915.force_probe=" ]
+  boot.kernelParams = [ "i915.force_probe=" ];
 	hardware.nvidia.prime = {
 	  sync.enable = true;
 		# Make sure to use the correct Bus ID values for your system!
