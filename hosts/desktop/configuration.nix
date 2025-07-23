@@ -36,7 +36,7 @@ in
     enable = true;
     enable32Bit = true;
     extraPackages = [
-      pkgs.intel-media-driver
+      pkgs.libva-intel-driver 
       pkgs.linux-firmware
     ];
   };
