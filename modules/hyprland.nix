@@ -30,17 +30,18 @@ in
   # };
 
   services.kanshi = {
-    enable = true;
+    enable = false;
     systemdTarget = "hyprland-session.target";
     profiles = {
       hdmi-only = {
+
         outputs = [
           {
-            criteria = "HDMI-A-1";
+            criteria = "Philips Consumer Electronics Company PHL 288E2 AU5203400317";
             status = "enable";
           }
           {
-            criteria = "DP-1";
+            criteria = "ViewSonic Corporation XG2401 SERIES 0x0101010";
             status = "disable";
           }
         ];
@@ -52,7 +53,7 @@ in
             status = "enable";
           }
           {
-            criteria = "DP-1";
+            criteria = "DP-3";
             status = "enable";
           }
         ];
@@ -211,10 +212,16 @@ in
         no_hardware_cursors = 1; # 1 disabled; 2 auto; this caused cursor disappearing
       };
 
+      workspace = [
+        "9, monitor:DP-3"
+        "9, monitor:DP-1"
+      ]
+
       general = {
         monitor = [
            "HDMI-A-1, preferred, 0x0, 1.25" 
-           "DP-1, preferred, auto, 1" 
+           "DP-1, preferred, auto, 0" 
+           "DP-3, preferred, auto, 0" 
         ];
         animation = [
           "workspaces, 0, 2, default, fade"
