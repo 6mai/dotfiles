@@ -215,7 +215,7 @@ in
       workspace = [
         "9, monitor:DP-3"
         "9, monitor:DP-1"
-      ]
+      ];
 
       general = {
         monitor = [
