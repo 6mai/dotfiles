@@ -61,7 +61,8 @@ in
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
     package = config.boot.kernelPackages.nvidiaPackages.stable;  
   };
-  
+
+  boot.kernelParams = [ "i915.force_probe=" ]
 	hardware.nvidia.prime = {
 	  sync.enable = true;
 		# Make sure to use the correct Bus ID values for your system!
@@ -129,16 +130,16 @@ in
 	  };                                                                     
 	};
 
-  systemd.services.greetd.serviceConfig = {
-      Type = "idle";
-      StandardInput = "tty";
-      StandardOutput = "tty";
-      StandardError = "journal"; # Without this errors will spam on screen
-      # Without these bootlogs will spam on screen
-      TTYReset = true;
-      TTYVHangup = true;
-      TTYVTDisallocate = true;
-    };
+  # systemd.services.greetd.serviceConfig = {
+  #     Type = "idle";
+  #     StandardInput = "tty";
+  #     StandardOutput = "tty";
+  #     StandardError = "journal"; # Without this errors will spam on screen
+  #     # Without these bootlogs will spam on screen
+  #     TTYReset = true;
+  #     TTYVHangup = true;
+  #     TTYVTDisallocate = true;
+  #   };
 
   systemd = {
     tmpfiles.settings = {
