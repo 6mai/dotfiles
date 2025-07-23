@@ -37,6 +37,7 @@ in
     enable32Bit = true;
     extraPackages = [
       pkgs.intel-media-driver
+      pkgs.linux-firmware
     ];
   };
 
@@ -89,15 +90,7 @@ in
 	  enable = true;                                                         
 	  settings = rec {                                                           
 	    login = {                                                  
-	      command = ''${pkgs.greetd.tuigreet}/bin/tuigreet
-	        --time
-	        --remember
-	        --remember-session
-	        --user-menu
-	        # --sessions ${pkgs.hyprland}/share/wayland-sessions
-	        --power-shutdown "systemctl shotdown"
-	        --power-reboot "systemctl reboot"
-	        --cmd ${pkgs.hyprland}/bin/hyprland;bash'';
+	      command = ''${pkgs.greetd.tuigreet}/bin/tuigreet --time --remember --remember-session --user-menu --sessions ${pkgs.hyprland}/share/wayland-sessions --power-shutdown "systemctl shotdown" --power-reboot "systemctl reboot" --cmd ${pkgs.hyprland}/bin/hyprland;bash'';
 	      user = "${user.userName}";                                                  
 	    };                                                                   
       # initial_session = {
