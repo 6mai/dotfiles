@@ -15,6 +15,7 @@ in
     hyprsysteminfo
     hyprcursor
     rose-pine-hyprcursor
+    nwg-displays
   ];
   
   # home.file.".local/share/icons/rose-pine-hyprcursor/".source = "${pkgs.rose-pine-hyprcursor}/share/icons/rose-pine-hyprcursor/hyprcursor/";
@@ -179,10 +180,10 @@ in
       };
 
       general = {
-        monitor = [
-           "HDMI-A-1, preferred, 0x0, 1.25" 
-           "DP-1, preferred, auto, 1" 
-        ];
+        # monitor = [
+        #    "HDMI-A-1, preferred, 0x0, 1.25" 
+        #    "DP-1, preferred, auto, 1" 
+        # ];
         animation = [
           "workspaces, 0, 2, default, fade"
           "windows, 1, 8, default, gnomed"
