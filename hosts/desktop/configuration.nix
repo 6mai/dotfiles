@@ -62,9 +62,9 @@ in
     package = config.boot.kernelPackages.nvidiaPackages.stable;  
   };
 
-  boot.kernelParams = [ "i915.force_probe=" ];
+  # boot.kernelParams = [ "i915.force_probe=" ];
 	hardware.nvidia.prime = {
-	  sync.enable = true;
+	  # sync.enable = true;
 		# Make sure to use the correct Bus ID values for your system!
 		intelBusId = "PCI:00:02:0";
 		nvidiaBusId = "PCI:01:00:0";
@@ -130,16 +130,16 @@ in
 	  };                                                                     
 	};
 
-  # systemd.services.greetd.serviceConfig = {
-  #     Type = "idle";
-  #     StandardInput = "tty";
-  #     StandardOutput = "tty";
-  #     StandardError = "journal"; # Without this errors will spam on screen
-  #     # Without these bootlogs will spam on screen
-  #     TTYReset = true;
-  #     TTYVHangup = true;
-  #     TTYVTDisallocate = true;
-  #   };
+  systemd.services.greetd.serviceConfig = {
+      Type = "idle";
+      StandardInput = "tty";
+      StandardOutput = "tty";
+      StandardError = "journal"; # Without this errors will spam on screen
+      # Without these bootlogs will spam on screen
+      TTYReset = true;
+      TTYVHangup = true;
+      TTYVTDisallocate = true;
+  };
 
   systemd = {
     tmpfiles.settings = {
