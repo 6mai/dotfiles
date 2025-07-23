@@ -41,8 +41,8 @@ in
     extraPackages = with pkgs; [
       intel-media-driver # LIBVA_DRIVER_NAME=iHD
       intel-vaapi-driver # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
-      libvdpau-va-gl
-    ];
+      linux-firmware
+      ];
   };
 
   # services.xserver.videoDrivers = ["nvidia"];
@@ -190,7 +190,7 @@ in
     BROWSER = "brave";
     NIXOS_OZONE_WL = "1";
 		GRIM_DEFAULT_DIR = "${user.homeDir}/files/screencaps";
-    # LIBVA_DRIVER_NAME = "iHD";
+    LIBVA_DRIVER_NAME = "iHD";
     # WLR_NO_HARDWARE_CURSORS = "1";
   };
 
