@@ -25,6 +25,7 @@ in
       ./../../modules/tor/default.nix
   ];
 
+  nixpkgs.config.allowUnfree = true;
   virtualisation.docker = {
     enable = true;
   };
